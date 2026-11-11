@@ -22,7 +22,7 @@ The 33-second demo captures two public VS Code pull requests: five screenshots, 
 | macOS / Apple Silicon | Experimental: testers needed | Google Chrome only in the first beta |
 | macOS / Intel | Experimental: testers needed | Google Chrome only in the first beta |
 
-Mac support is currently available from source; downloadable packages are pending build setup. Mac builds are not notarized. **A successful build is not proof of working screen capture on Mac hardware.** Please follow the [Mac tester guide](docs/MAC_TESTING.md) and report results with the issue template.
+Experimental Mac downloads for Apple Silicon and Intel are available in the release. Mac builds are not notarized. **A successful build is not proof of working screen capture on Mac hardware.** Please follow the [Mac tester guide](docs/MAC_TESTING.md) and report results with the issue template.
 
 ## What it does
 
@@ -54,7 +54,7 @@ python -m pip install -r requirements.txt
 python app.py
 ```
 
-Windows: `Build.cmd` creates the desktop executable. Mac: `python build_macos.py` creates an experimental `.app` and ZIP. Automated Windows, Apple Silicon, and Intel builds are pending GitHub workflow authorization.
+Windows: `Build.cmd` creates the desktop executable. Mac: `python build_macos.py` creates an experimental `.app` and ZIP. GitHub Actions builds and runs portable checks on Windows, Apple Silicon, and Intel; [the initial build passed on all three](https://github.com/heyouio/heyou-capture/actions/runs/43035032192).
 
 ## Limits and privacy
 
