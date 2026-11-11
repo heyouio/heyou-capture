@@ -1,0 +1,4 @@
+Pillow>=12.1,<13
+customtkinter==6.0.0
+pyobjc-framework-Quartz>=11,<13; sys_platform == 'darwin'
+pyobjc-framework-Cocoa>=11,<13; sys_platform == 'darwin'

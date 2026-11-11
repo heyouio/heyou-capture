@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.venv/
+.build-deps/
+build/
+dist*/
+*.spec
+.browser-test/
+.ui-demo/
+.DS_Store
+*.log
+*.mp4
+*.avi
+*.zip
+*.dmg
+*.app/
+.env*

@@ -1,0 +1,40 @@
+name: Mac beta tester report
+description: Help validate the experimental macOS capture backend
+title: "[macOS beta] "
+body:
+  - type: markdown
+    attributes:
+      value: "Use public pages only. Do not upload private screenshots, tokens, or unreviewed logs."
+  - type: input
+    id: hardware
+    attributes:
+      label: Mac model and chip
+      placeholder: MacBook Air M2 / Intel MacBook Pro
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: macOS, Chrome, and app version
+    validations:
+      required: true
+  - type: textarea
+    id: displays
+    attributes:
+      label: Displays, scaling, and arrangement
+  - type: checkboxes
+    id: permissions
+    attributes:
+      label: Setup
+      options:
+        - label: Screen Recording allowed and app restarted
+        - label: Automation access to Chrome allowed
+        - label: Chrome JavaScript from Apple Events enabled
+        - label: Menu bar, date, and clock visible
+  - type: textarea
+    id: results
+    attributes:
+      label: Test cases and actual results
+      description: Include long page, multiple tabs, overlap, clock, folder contents, and restoration.
+    validations:
+      required: true
