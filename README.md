@@ -14,7 +14,7 @@ Built at Heyou while preparing approximately **500 screenshots** for SOC 2 evide
 
 [![Watch Heyou Capture in action](marketing/demo-poster.png)](https://github.com/heyouio/heyou-capture/releases/download/v0.1.0-beta.1/heyou-capture-demo.mp4)
 
-The 33-second demo captures two public VS Code pull requests: five screenshots, two folders. The approximately 500 screenshots above describe our evidence-gathering use case, not this demo run.
+The 25-second app-only demo captures two public VS Code pull requests: five screenshots, two folders. The approximately 500 screenshots above describe our evidence-gathering use case, not this demo run.
 
 | Platform | Status | Browser support |
 | --- | --- | --- |

@@ -10,7 +10,7 @@ import time
 import subprocess
 from unittest.mock import patch
 import tkinter as tk
-from PIL import Image, ImageDraw, ImageFont, ImageGrab
+from PIL import ImageGrab
 import imageio_ffmpeg
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,51 +19,8 @@ from app import App
 from platform_windows import browsers, monitors, user32, native_handle
 
 URLS = ['https://github.com/microsoft/vscode/pull/347612', 'https://github.com/microsoft/vscode/pull/347605']
-W,H,FPS = 1920,1080,8
+FPS = 8
 OUT = ROOT/'marketing'/'heyou-capture-demo.mp4'
-FONT = Path(os.environ.get('WINDIR', r'C:\Windows'))/'Fonts'
-def font(size, bold=False): return ImageFont.truetype(str(FONT/('segoeuib.ttf' if bold else 'segoeui.ttf')),size)
-
-
-def canvas():
-    image=Image.new('RGB',(W,H),'#24103F')
-    draw=ImageDraw.Draw(image)
-    for y in range(H):
-        t=y/H
-        draw.line((0,y,W,y),fill=(int(36+13*t),int(16+4*t),int(63+18*t)))
-    return image
-
-
-def title_frame(title,subtitle):
-    image=canvas(); d=ImageDraw.Draw(image)
-    d.rounded_rectangle((100,70,310,180),radius=28,fill='white')
-    logo=Image.open(ROOT/'assets/heyou-logo.png').convert('RGB');logo.thumbnail((160,80))
-    image.paste(logo,(126,88))
-    d.text((100,300),title,font=font(100,True),fill='#FFF9F4',spacing=8)
-    d.text((106,640),subtitle,font=font(37),fill='#DCC8F4',spacing=14)
-    d.rounded_rectangle((106,850,1120,938),radius=38,fill='#FF388C')
-    d.text((143,867),'github.com/heyouio/heyou-capture',font=font(38,True),fill='white')
-    return image
-
-
-def app_frame(screenshot, phase):
-    image=canvas(); d=ImageDraw.Draw(image)
-    d.text((54,40),'HEYOU CAPTURE',font=font(22,True),fill='#FFA8D0')
-    labels={0:('01','Pick a\nbrowser\nwindow.','Every open tab.\nNo extension.'),
-            1:('02','Watch your\ncollection\ngrow.','Real screenshots.\nLive folders + thumbnails.'),
-            2:('03','Ready to\nzip and\nshare.','One folder per tab.\nPNG files only.')}
-    n,title,copy=labels[phase]
-    d.text((54,210),n,font=font(72,True),fill='#FF388C')
-    d.text((54,330),title,font=font(52,True),fill='#FFF9F4',spacing=4)
-    d.text((54,580),copy,font=font(23),fill='#DCC8F4',spacing=10)
-    screenshot=screenshot.convert('RGB')
-    screenshot.thumbnail((1390,950),Image.Resampling.LANCZOS)
-    x=480+(1390-screenshot.width)//2;y=70+(950-screenshot.height)//2
-    image.paste(screenshot,(x,y))
-    d.text((54,1000),'LIVE DEMO  •  Public microsoft/vscode pull requests  •  Isolated browser profile',font=font(23),fill='#BBA6D1')
-    return image
-
-
 def main():
     session=ROOT/'.demo-session'
     session.mkdir(exist_ok=True)
@@ -101,10 +58,10 @@ def main():
             root.update()
             root.attributes('-topmost',True)
             app.preview()
-            writer=imageio_ffmpeg.write_frames(str(OUT),(W,H),fps=FPS,codec='libx264',pix_fmt_in='rgb24',pix_fmt_out='yuv420p',quality=8,output_params=['-movflags','+faststart'],macro_block_size=1)
+            first_shot=ImageGrab.grab(window=native_handle(root))
+            video_size=(first_shot.width//2*2,first_shot.height//2*2)
+            writer=imageio_ffmpeg.write_frames(str(OUT),video_size,fps=FPS,codec='libx264',pix_fmt_in='rgb24',pix_fmt_out='yuv420p',quality=8,output_params=['-movflags','+faststart'],macro_block_size=1)
             writer.send(None)
-            intro=title_frame('500 screenshots.\nOne repetitive job.','Built at Heyou for the screenshot work behind SOC 2 evidence.').tobytes()
-            for _ in range(FPS*4):writer.send(intro)
             started=time.monotonic();capture_started=False;finished=None;frames=0
             while True:
                 tick=time.monotonic();root.update()
@@ -114,15 +71,14 @@ def main():
                 if tick-started>150:raise RuntimeError('Recording timed out; inspect capture status.')
                 shot=ImageGrab.grab(window=native_handle(root))
                 if shot.width<500 or shot.height<300:raise RuntimeError('The app window could not be recorded safely.')
-                phase=2 if finished else 1 if capture_started else 0
-                frame=app_frame(shot,phase)
+                if (shot.width//2*2,shot.height//2*2) != video_size:
+                    raise RuntimeError('App window size changed during recording.')
+                frame=shot.convert('RGB').crop((0,0,*video_size))
                 writer.send(frame.tobytes());frames+=1
                 if frames==8:frame.save(ROOT/'marketing'/'demo-poster.png')
                 if finished and tick-finished>5:break
                 time.sleep(max(0,1/FPS-(time.monotonic()-tick)))
             if app.collection.count == 0:raise RuntimeError('No screenshots were captured: '+app.status.get())
-            ending=title_frame('Less screenshot work.\nMore time for your team.','Windows beta available. Mac testers wanted.\nPublic demo pages belong to microsoft/vscode. No affiliation.').tobytes()
-            for _ in range(FPS*4):writer.send(ending)
             print('VIDEO:',OUT)
             print('RESULT:',app.status.get())
     finally:

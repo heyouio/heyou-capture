@@ -11,4 +11,4 @@ Only the app window is recorded. Its previews and captures show those public PRs
 
 To reproduce on Windows with two monitors: install `imageio-ffmpeg` in addition to the app requirements and run `python marketing/record_demo.py` from the repository root. It creates `marketing/heyou-capture-demo.mp4`; the MP4 and temporary browser profile are excluded from Git. Review the complete video before posting externally.
 
-The clip uses captions and no microphone/audio recording. Live counters reflect files actually saved by the app. The time-saved figure shown in the app is explicitly an estimate, not a measured work-saving claim.
+The clip shows only the app window, with no title cards, surrounding captions, or microphone/audio recording. Live counters reflect files actually saved by the app. The time-saved figure shown in the app is explicitly an estimate, not a measured work-saving claim.
