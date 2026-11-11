@@ -12,13 +12,17 @@ Built at Heyou while preparing approximately **500 screenshots** for SOC 2 evide
 
 [Get the latest release](https://github.com/heyouio/heyou-capture/releases).
 
+[![Watch Heyou Capture in action](marketing/demo-poster.png)](https://github.com/heyouio/heyou-capture/releases/download/v0.1.0-beta.1/heyou-capture-demo.mp4)
+
+The 33-second demo captures two public VS Code pull requests: five screenshots, two folders. The approximately 500 screenshots above describe our evidence-gathering use case, not this demo run.
+
 | Platform | Status | Browser support |
 | --- | --- | --- |
 | Windows 11 / x64 | Beta, tested locally | Chrome tested end to end; other Chromium browsers need validation |
 | macOS / Apple Silicon | Experimental: testers needed | Google Chrome only in the first beta |
 | macOS / Intel | Experimental: testers needed | Google Chrome only in the first beta |
 
-Mac packages are not notarized. **A successful build is not proof of working screen capture on Mac hardware.** Please follow the [Mac tester guide](docs/MAC_TESTING.md) and report results with the issue template.
+Mac support is currently available from source; downloadable packages are pending build setup. Mac builds are not notarized. **A successful build is not proof of working screen capture on Mac hardware.** Please follow the [Mac tester guide](docs/MAC_TESTING.md) and report results with the issue template.
 
 ## What it does
 
@@ -50,7 +54,7 @@ python -m pip install -r requirements.txt
 python app.py
 ```
 
-Windows: `Build.cmd` creates the desktop executable. Mac: `python build_macos.py` creates an experimental `.app` and ZIP. GitHub Actions builds Windows, Apple Silicon, and Intel artifacts.
+Windows: `Build.cmd` creates the desktop executable. Mac: `python build_macos.py` creates an experimental `.app` and ZIP. Automated Windows, Apple Silicon, and Intel builds are pending GitHub workflow authorization.
 
 ## Limits and privacy
 

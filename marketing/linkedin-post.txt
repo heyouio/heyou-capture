@@ -1,0 +1,26 @@
+Click. Scroll. Screenshot. Rename. Repeat.
+
+Now do it roughly 500 times.
+
+That was the screenshot pile we worked through while preparing SOC 2 evidence at Heyou.
+
+For teams collecting evidence, we built Heyou Capture: a local desktop app that turns a browser window full of tabs into organized screenshots.
+
+The task wasn't technically difficult. It was exhausting: getting the whole page, keeping the clock visible, avoiding gaps, and putting every image in the right folder.
+
+So we automated it—and we're open-sourcing the tool.
+
+Pick a browser window. It visits the tabs, scrolls each page with overlap, and saves each tab into its own URL-named folder. Only PNGs in the export. Ready to zip and share.
+
+You can watch folders and thumbnails arrive, see the collection grow, and get a final image count. Everything stays on your device.
+
+The demo uses public VS Code pull requests, not private Heyou code.
+
+The Windows beta is ready. Our experimental Mac version needs testers on Apple Silicon and Intel.
+
+If you've ever been the person gathering the evidence, you know why we built this.
+
+Try it—or help us test the Mac version:
+https://github.com/heyouio/heyou-capture
+
+#SOC2 #OpenSource #BuildInPublic
